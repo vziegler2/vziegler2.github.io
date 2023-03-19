@@ -6,12 +6,8 @@ sap.ui.define([
    "use strict";
    return UIComponent.extend("root.Component", {
       metadata : {
-         "rootView": {
-            "viewName": "root.view.App",
-            "type": "XML",
-            "async": true,
-            "id": "app"
-         }
+         interfaces: ["sap.ui.core.IAsyncContentCreation"],
+         manifest: "json"
       },
       init : function () {
          // call the init function of the parent
@@ -23,11 +19,6 @@ sap.ui.define([
             }
          });
          this.setModel(oModel);
-         // set i18n model
-         var i18nModel = new ResourceModel({
-            bundleName: "root.i18n.i18n"
-         });
-         this.setModel(i18nModel, "i18n");
       }
    });
 });
