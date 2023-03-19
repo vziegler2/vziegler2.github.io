@@ -8,12 +8,11 @@ sap.ui.define([
     return Controller.extend("root.controller.App", {
       onInit : function () {
           // set data model on view
-          var oData = {
-             recipient : {
-                name : "World"
-             }
-          };
-          var oModel = new JSONModel(oData);
+          var oModel = new JSONModel({
+            recipient : {
+               name : "World"
+            }
+         });
           this.getView().setModel(oModel);
           // set i18n model on view
           var i18nModel = new ResourceModel({
