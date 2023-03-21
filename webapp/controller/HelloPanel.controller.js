@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast"
- ], function (Controller, MessageToast) {
+    "sap/m/MessageToast",
+	"sap/ui/core/Fragment"
+ ], function (Controller, MessageToast, Fragment) {
     "use strict";
     return Controller.extend("root.controller.HelloPanel", {
        onShowHello : function () {
@@ -11,6 +12,18 @@ sap.ui.define([
           var sMsg = oBundle.getText("helloMsg", [sRecipient]);
           // show message
           MessageToast.show(sMsg);
-       }
+       },
+       onOpenDialog : function () {
+
+        // create dialog lazily
+        if (!this.pDialog) {
+            this.pDialog = this.loadFragment({
+                name: "root.view.HelloDialog"
+            });
+        } 
+        this.pDialog.then(function(oDialog) {
+            oDialog.open();
+            });
+        }
     });
  });
