@@ -3,7 +3,7 @@
       {
         "ProductName": "Wasser",
         "Quantity": 6,
-        "ExtendedPrice": 87.2,
+        "ExtendedPrice": 3,
         "ShipperName": "Fun Inc.",
         "ShippedDate": "2015-04-01T00:00:00",
         "Status": "A"
@@ -11,7 +11,7 @@
       {
         "ProductName": "Nüsse",
         "Quantity": 3,
-        "ExtendedPrice": 10,
+        "ExtendedPrice": 8.67,
         "ShipperName": "ACME",
         "ShippedDate": "2015-02-18T00:00:00",
         "Status": "B"
@@ -27,7 +27,7 @@
       {
         "ProductName": "Gemüse",
         "Quantity": 2,
-        "ExtendedPrice": 8.8,
+        "ExtendedPrice": 1.4,
         "ShipperName": "ACME",
         "ShippedDate": "2015-04-12T00:00:00",
         "Status": "C"
@@ -35,7 +35,7 @@
       {
         "ProductName": "Brot",
         "Quantity": 1,
-        "ExtendedPrice": 2.71,
+        "ExtendedPrice": 3.95,
         "ShipperName": "Fun Inc.",
         "ShippedDate": "2015-01-27T00:00:00",
         "Status": "A"
