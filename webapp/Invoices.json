@@ -4,7 +4,7 @@
         "ProductName": "Wasser",
         "Quantity": 6,
         "ExtendedPrice": 3,
-        "ShipperName": "Fun Inc.",
+        "ShipperName": "Rewe",
         "ShippedDate": "2015-04-01T00:00:00",
         "Status": "A"
       },
@@ -12,7 +12,7 @@
         "ProductName": "Nüsse",
         "Quantity": 3,
         "ExtendedPrice": 8.67,
-        "ShipperName": "ACME",
+        "ShipperName": "Edeka",
         "ShippedDate": "2015-02-18T00:00:00",
         "Status": "B"
       },
@@ -20,7 +20,7 @@
         "ProductName": "Obst",
         "Quantity": 4,
         "ExtendedPrice": 6.85,
-        "ShipperName": "ACME",
+        "ShipperName": "Edeka",
         "ShippedDate": "2015-03-02T00:00:00",
         "Status": "B"
       },
@@ -28,7 +28,7 @@
         "ProductName": "Gemüse",
         "Quantity": 2,
         "ExtendedPrice": 1.4,
-        "ShipperName": "ACME",
+        "ShipperName": "Edeka",
         "ShippedDate": "2015-04-12T00:00:00",
         "Status": "C"
       },
@@ -36,7 +36,7 @@
         "ProductName": "Brot",
         "Quantity": 1,
         "ExtendedPrice": 3.95,
-        "ShipperName": "Fun Inc.",
+        "ShipperName": "Rewe",
         "ShippedDate": "2015-01-27T00:00:00",
         "Status": "A"
       }
