@@ -78,9 +78,9 @@ const UserForm = () => {
           onChange={handleChange}
         >
           <option value=""></option>
-          <option value="option1">Plastic</option>
-          <option value="option2">Masterbatch</option>
-          <option value="option3">Laminat</option>
+          <option value="Plastic">Plastic</option>
+          <option value="Masterbatch">Masterbatch</option>
+          <option value="Laminat">Laminat</option>
         </select>
       </div>
 
