@@ -21,7 +21,7 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], input[type="number"], select, textarea {
+        input[type="text"], input[type="number"], input[type="email"], select, textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
@@ -60,6 +60,8 @@
 <body>
     <h1>Material Request Form</h1>
     <form id="materialRequestForm">
+        <!-- Previous form fields remain unchanged -->
+        
         <div class="form-group">
             <label>Sales markets:</label>
             <div class="checkbox-group" id="salesMarkets">
@@ -267,7 +269,12 @@
 
         <div class="form-group">
             <label for="fileUpload">Upload File:</label>
-            <input type="file" id="fileUpload" name="fileUpload">
+            <input type="file" id="fileUpload" name="fileUpload" multiple>
+        </div>
+
+        <div class="form-group">
+            <label for="emailAddress">Email Address:</label>
+            <input type="email" id="emailAddress" name="emailAddress" required>
         </div>
 
         <button type="submit">Submit Request</button>
@@ -328,8 +335,8 @@
 
             // File upload handling
             fileUpload.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
+                const files = e.target.files;
+                if (files.length > 0) {
                     const checkedBoxes = checkboxContainer.querySelectorAll('input[type="checkbox"]:checked');
                     checkedBoxes.forEach(checkbox => {
                         const label = checkbox.nextElementSibling;
@@ -337,11 +344,11 @@
                         checkbox.checked = false; // Uncheck the checkbox
                         const fileNameSpan = document.createElement('span');
                         fileNameSpan.className = 'file-name';
-                        fileNameSpan.textContent = file.name;
+                        fileNameSpan.textContent = Array.from(files).map(file => file.name).join(', ');
                         label.appendChild(fileNameSpan);
                     });
-                    console.log('File selected:', file.name);
-                    alert(`Datei "${file.name}" wurde ausgewählt und den angehakten Checkboxen zugeordnet.`);
+                    console.log('Files selected:', Array.from(files).map(file => file.name).join(', '));
+                    alert(`Dateien "${Array.from(files).map(file => file.name).join(', ')}" wurden ausgewählt und den angehakten Checkboxen zugeordnet.`);
                 }
             });
 
@@ -355,9 +362,32 @@
                 data.salesMarkets = formData.getAll('salesMarkets');
                 data.groupCheckboxes = formData.getAll('groupCheckbox');
 
+                // Handle file uploads
+                data.files = Array.from(fileUpload.files).map(file => file.name);
+
                 console.log('Form Data:', data);
+                
                 // Here you would typically send the data to a server
-                alert('Form submitted successfully!');
+                // For demonstration purposes, we'll just show an alert
+                alert(`Form submitted successfully! Files will be sent to ${data.emailAddress}`);
+                
+                // In a real implementation, you would send the form data and files to a server
+                // The server would then process the data and send an email with the attached files
+                // Example server-side pseudo-code:
+                /*
+                server.post('/submit-form', (req, res) => {
+                    const formData = req.body;
+                    const files = req.files;
+                    
+                    // Process form data
+                    // ...
+
+                    // Send email with attached files
+                    sendEmail(formData.emailAddress, 'Form Submission', formData, files);
+
+                    res.send('Form submitted successfully');
+                });
+                */
             });
 
             // Autofill functionality for Country of origin
