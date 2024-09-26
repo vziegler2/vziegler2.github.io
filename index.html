@@ -48,6 +48,9 @@
         button:hover {
             background-color: #45a049;
         }
+        #checkboxContainer {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -252,6 +255,17 @@
             <input type="text" id="requester" name="requester">
         </div>
 
+        <button type="button" id="showCheckboxesButton">Show Checkboxes</button>
+
+        <div id="checkboxContainer" style="display: none;">
+            <!-- Checkboxes will be dynamically added here -->
+        </div>
+
+        <div class="form-group">
+            <label for="fileUpload">Upload File:</label>
+            <input type="file" id="fileUpload" name="fileUpload">
+        </div>
+
         <button type="submit">Submit Request</button>
     </form>
 
@@ -260,6 +274,10 @@
             const form = document.getElementById('materialRequestForm');
             const hasFormulaContactRadios = document.getElementsByName('hasFormulaContact');
             const usedForTransportOnlyGroup = document.getElementById('usedForTransportOnlyGroup');
+            const materialGroup = document.getElementById('materialGroup');
+            const showCheckboxesButton = document.getElementById('showCheckboxesButton');
+            const checkboxContainer = document.getElementById('checkboxContainer');
+            const fileUpload = document.getElementById('fileUpload');
 
             // Show/hide "Used for Transport only" based on "Has formula contact"
             hasFormulaContactRadios.forEach(radio => {
@@ -272,14 +290,57 @@
                 });
             });
 
+            // Show checkboxes based on selected group
+            showCheckboxesButton.addEventListener('click', function() {
+                const selectedGroup = materialGroup.value;
+                if (selectedGroup) {
+                    checkboxContainer.innerHTML = ''; // Clear previous checkboxes
+                    checkboxContainer.style.display = 'block';
+                    let checkboxes;
+                    switch (selectedGroup) {
+                        case 'group1':
+                            checkboxes = ['Checkbox 1', 'Checkbox 2'];
+                            break;
+                        case 'group2':
+                            checkboxes = ['Checkbox 3', 'Checkbox 4'];
+                            break;
+                        case 'group3':
+                            checkboxes = ['Checkbox 5', 'Checkbox 6'];
+                            break;
+                    }
+                    checkboxes.forEach(checkbox => {
+                        const checkboxItem = document.createElement('div');
+                        checkboxItem.className = 'checkbox-item';
+                        checkboxItem.innerHTML = `
+                            <input type="checkbox" id="${checkbox}" name="groupCheckbox" value="${checkbox}">
+                            <label for="${checkbox}">${checkbox}</label>
+                        `;
+                        checkboxContainer.appendChild(checkboxItem);
+                    });
+                } else {
+                    alert('Bitte wählen Sie zuerst eine Gruppe aus.');
+                }
+            });
+
+            // File upload handling
+            fileUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    console.log('File selected:', file.name);
+                    // Here you would typically handle the file, e.g., prepare it for upload
+                    alert(`Datei "${file.name}" wurde ausgewählt.`);
+                }
+            });
+
             // Form submission
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData.entries());
                 
-                // Handle multiple checkbox values for salesMarkets
+                // Handle multiple checkbox values for salesMarkets and groupCheckbox
                 data.salesMarkets = formData.getAll('salesMarkets');
+                data.groupCheckboxes = formData.getAll('groupCheckbox');
 
                 console.log('Form Data:', data);
                 // Here you would typically send the data to a server
@@ -294,9 +355,8 @@
                 const value = this.value.toLowerCase();
                 const matchingCountry = countries.find(country => country.toLowerCase().startsWith(value));
                 
-                if (matchingCountry) {
+                if (matchingCountry)
                     this.value = matchingCountry;
-                }
             });
         });
     </script>
