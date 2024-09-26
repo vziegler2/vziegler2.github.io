@@ -303,13 +303,13 @@
                     let checkboxes;
                     switch (selectedGroup) {
                         case 'group1':
-                            checkboxes = ['Checkbox 1', 'Checkbox 2'];
+                            checkboxes = ['Checkbox 1', 'Checkbox 2', 'Checkbox 3'];
                             break;
                         case 'group2':
-                            checkboxes = ['Checkbox 3', 'Checkbox 4'];
+                            checkboxes = ['Checkbox 2', 'Checkbox 3', 'Checkbox 4'];
                             break;
                         case 'group3':
-                            checkboxes = ['Checkbox 5', 'Checkbox 6'];
+                            checkboxes = ['Checkbox 3', 'Checkbox 4', 'Checkbox 5'];
                             break;
                     }
                     checkboxes.forEach(checkbox => {
@@ -334,6 +334,7 @@
                     checkedBoxes.forEach(checkbox => {
                         const label = checkbox.nextElementSibling;
                         checkbox.style.display = 'none';
+                        checkbox.checked = false; // Uncheck the checkbox
                         const fileNameSpan = document.createElement('span');
                         fileNameSpan.className = 'file-name';
                         fileNameSpan.textContent = file.name;
@@ -350,7 +351,7 @@
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData.entries());
                 
-                // Handle multiple checkbox values for salesMarkets and groupCheckbox
+                // Handle multiple checkbox values for sales markets and group checkboxes
                 data.salesMarkets = formData.getAll('salesMarkets');
                 data.groupCheckboxes = formData.getAll('groupCheckbox');
 
