@@ -51,6 +51,10 @@
         #checkboxContainer {
             margin-top: 20px;
         }
+        .file-name {
+            margin-left: 10px;
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
@@ -326,9 +330,17 @@
             fileUpload.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
+                    const checkedBoxes = checkboxContainer.querySelectorAll('input[type="checkbox"]:checked');
+                    checkedBoxes.forEach(checkbox => {
+                        const label = checkbox.nextElementSibling;
+                        checkbox.style.display = 'none';
+                        const fileNameSpan = document.createElement('span');
+                        fileNameSpan.className = 'file-name';
+                        fileNameSpan.textContent = file.name;
+                        label.appendChild(fileNameSpan);
+                    });
                     console.log('File selected:', file.name);
-                    // Here you would typically handle the file, e.g., prepare it for upload
-                    alert(`Datei "${file.name}" wurde ausgewählt.`);
+                    alert(`Datei "${file.name}" wurde ausgewählt und den angehakten Checkboxen zugeordnet.`);
                 }
             });
 
@@ -355,8 +367,9 @@
                 const value = this.value.toLowerCase();
                 const matchingCountry = countries.find(country => country.toLowerCase().startsWith(value));
                 
-                if (matchingCountry)
+                if (matchingCountry) {
                     this.value = matchingCountry;
+                }
             });
         });
     </script>
