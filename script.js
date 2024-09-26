@@ -26,16 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayCheckboxes(option) {
         checkboxContainer.innerHTML = '';
-        checkboxes[option].forEach((label, index) => {
-            if (!selectedFiles[label]) {
-                const checkboxItem = document.createElement('div');
-                checkboxItem.className = 'checkbox-item';
-                checkboxItem.innerHTML = `
-                    <input type="checkbox" id="${label}" name="${label}">
-                    <label for="${label}">${label}</label>
-                `;
-                checkboxContainer.appendChild(checkboxItem);
-            }
+        checkboxes[option].forEach((label) => {
+            const checkboxItem = document.createElement('div');
+            checkboxItem.className = 'checkbox-item';
+            checkboxItem.innerHTML = `
+                <input type="checkbox" id="${label}" name="${label}" ${selectedFiles[label] ? 'style="display:none;"' : ''}>
+                <label for="${label}">${label}</label>
+                ${selectedFiles[label] ? `<span class="file-name">${selectedFiles[label]}</span>` : ''}
+            `;
+            checkboxContainer.appendChild(checkboxItem);
         });
     }
 
@@ -54,12 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
         
         checkedBoxes.forEach(checkbox => {
             selectedFiles[checkbox.id] = file.name;
-            checkbox.parentElement.remove();
+            checkbox.style.display = 'none';
+            const fileNameSpan = document.createElement('span');
+            fileNameSpan.className = 'file-name';
+            fileNameSpan.textContent = file.name;
+            checkbox.parentElement.appendChild(fileNameSpan);
         });
 
         if (Object.keys(selectedFiles).length > 0) {
             emailContainer.style.display = 'block';
         }
+
+        // Refresh the checkbox display
+        displayCheckboxes(dropdown.value);
     });
 
     sendButton.addEventListener('click', () => {
