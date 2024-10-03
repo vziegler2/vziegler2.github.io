@@ -21,13 +21,13 @@
                         </MultiComboBox>
                         
                         <Label text="Has formula contact" />
-                        <RadioButtonGroup selectedIndex="{viewModel>/hasFormulaContact}">
+                        <RadioButtonGroup selectedIndex="{viewModel>/hasFormulaContact}" columns="2">
                             <RadioButton text="Yes" />
                             <RadioButton text="No" />
                         </RadioButtonGroup>
 
                         <Label text="Used for Transport only" visible="{= ${viewModel>/hasFormulaContact} === 1}" />
-                        <RadioButtonGroup selectedIndex="{viewModel>/usedForTransportOnly}" visible="{= ${viewModel>/hasFormulaContact} === 1}">
+                        <RadioButtonGroup selectedIndex="{viewModel>/usedForTransportOnly}" visible="{= ${viewModel>/hasFormulaContact} === 1}" columns="2">
                             <RadioButton text="Yes" />
                             <RadioButton text="No" />
                         </RadioButtonGroup>
@@ -58,6 +58,7 @@
                         <Select
                             selectedKey="{viewModel>/materialGroup}"
                             change="onMaterialGroupChange">
+                            <core:Item key="" text="" />
                             <core:Item key="group1" text="Group 1" />
                             <core:Item key="group2" text="Group 2" />
                             <core:Item key="group3" text="Group 3" />
@@ -71,6 +72,7 @@
                         
                         <Label text="Color" />
                         <Select selectedKey="{viewModel>/color}">
+                            <core:Item key="" text="" />
                             <core:Item key="red" text="Red" />
                             <core:Item key="blue" text="Blue" />
                             <core:Item key="green" text="Green" />
@@ -81,19 +83,21 @@
 
                         <Label text="Opacity" />
                         <Select selectedKey="{viewModel>/opacity}">
+                            <core:Item key="" text="" />
                             <core:Item key="transparent" text="Transparent" />
                             <core:Item key="translucent" text="Translucent" />
                             <core:Item key="opaque" text="Opaque" />
                         </Select>
 
                         <Label text="Made from renewable resources" />
-                        <RadioButtonGroup selectedIndex="{viewModel>/madeFromRenewableResources}">
+                        <RadioButtonGroup selectedIndex="{viewModel>/madeFromRenewableResources}" columns="2">
                             <RadioButton text="Yes" />
                             <RadioButton text="No" />
                         </RadioButtonGroup>
 
                         <Label text="Technical expert Group" />
                         <Select selectedKey="{viewModel>/technicalExpertGroup}">
+                            <core:Item key="" text="" />
                             <core:Item key="group1" text="Expert Group 1" />
                             <core:Item key="group2" text="Expert Group 2" />
                             <core:Item key="group3" text="Expert Group 3" />
@@ -104,6 +108,7 @@
 
                         <Label text="Recycling Technology" />
                         <Select selectedKey="{viewModel>/recyclingTechnology}">
+                            <core:Item key="" text="" />
                             <core:Item key="mechanical" text="Mechanical" />
                             <core:Item key="chemical" text="Chemical" />
                             <core:Item key="biological" text="Biological" />
@@ -137,14 +142,13 @@
                 <Button text="Show Checkboxes" press="onShowCheckboxes" />
 
                 <Panel id="checkboxContainer" visible="false">
-                    <content>
+                    <VBox id="checkboxVBox">
                         <!-- Checkboxes will be added dynamically -->
-                    </content>
+                    </VBox>
                 </Panel>
 
                 <u:FileUploader
                     id="fileUploader"
-                    multiple="true"
                     uploadComplete="handleUploadComplete"
                     change="handleFileChange"
                     style="Emphasized"

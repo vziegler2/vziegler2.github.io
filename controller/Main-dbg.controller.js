@@ -1,8 +1,11 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox"
-], function (Controller, JSONModel, MessageBox) {
+    "sap/m/MessageBox",
+    "sap/m/CheckBox",
+    "sap/m/Label",
+    "sap/m/HBox"
+], function (Controller, JSONModel, MessageBox, CheckBox, Label, HBox) {
     "use strict";
 
     return Controller.extend("myapp.controller.Main", {
@@ -24,15 +27,16 @@ sap.ui.define([
                     {key: "spain", text: "Spain"},
                     {key: "uk", text: "United Kingdom"}
                 ],
-                selectedSalesMarkets: []
+                selectedSalesMarkets: [],
+                checkboxes: [],
+                uploadedFileName: ""
             });
             this.getView().setModel(oViewModel, "viewModel");
         },
 
         onMaterialGroupChange: function (oEvent) {
             var sSelectedKey = oEvent.getParameter("selectedItem").getKey();
-            var oCheckboxContainer = this.byId("checkboxContainer");
-            oCheckboxContainer.removeAllContent();
+            var oViewModel = this.getView().getModel("viewModel");
 
             var aCheckboxes;
             switch (sSelectedKey) {
@@ -49,13 +53,49 @@ sap.ui.define([
                     aCheckboxes = [];
             }
 
-            aCheckboxes.forEach(function (sCheckboxText) {
-                var oCheckBox = new sap.m.CheckBox({
-                    text: sCheckboxText,
-                    selected: "{/" + sCheckboxText.replace(" ", "") + "}"
-                });
-                oCheckboxContainer.addContent(oCheckBox);
+            var aCheckboxData = aCheckboxes.map(function(sText) {
+                return {
+                    text: sText,
+                    selected: false,
+                    hasFile: false,
+                    fileName: ""
+                };
             });
+            oViewModel.setProperty("/checkboxes", aCheckboxData);
+
+            this.updateCheckboxes();
+        },
+
+        updateCheckboxes: function() {
+            var oViewModel = this.getView().getModel("viewModel");
+            var aCheckboxData = oViewModel.getProperty("/checkboxes");
+            var oCheckboxVBox = this.byId("checkboxVBox");
+
+            oCheckboxVBox.removeAllItems();
+
+            aCheckboxData.forEach(function (oCheckboxData, iIndex) {
+                var oHBox = new HBox({
+                    items: [
+                        new CheckBox({
+                            text: oCheckboxData.hasFile ? 
+                                  oCheckboxData.text + ": " + oCheckboxData.fileName :
+                                  oCheckboxData.text,
+                            selected: "{viewModel>/checkboxes/" + iIndex + "/selected}",
+                            enabled: "{= !${viewModel>/checkboxes/" + iIndex + "/hasFile} }",
+                            select: this.onCheckboxSelect.bind(this)
+                        })
+                    ]
+                });
+                oCheckboxVBox.addItem(oHBox);
+            }.bind(this));
+        },
+
+        onCheckboxSelect: function(oEvent) {
+            var oViewModel = this.getView().getModel("viewModel");
+            var aCheckboxData = oViewModel.getProperty("/checkboxes");
+            var iIndex = parseInt(oEvent.getSource().getId().split("-").pop());
+            aCheckboxData[iIndex].selected = oEvent.getParameter("selected");
+            oViewModel.setProperty("/checkboxes", aCheckboxData);
         },
 
         onShowCheckboxes: function () {
@@ -64,21 +104,35 @@ sap.ui.define([
         },
 
         handleFileChange: function (oEvent) {
-            var aFiles = oEvent.getParameter("files");
-            if (aFiles && aFiles.length > 0) {
-                var aFileNames = aFiles.map(function (oFile) {
-                    return oFile.name;
-                });
-                MessageBox.information("Files selected: " + aFileNames.join(", "));
+            var oFile = oEvent.getParameter("files")[0];
+            var oViewModel = this.getView().getModel("viewModel");
+            
+            if (oFile) {
+                var aCheckboxData = oViewModel.getProperty("/checkboxes");
+                var bFileAssigned = false;
 
-                // Here you would typically handle the file upload
-                // For demonstration, we're just showing the file names
+                aCheckboxData.forEach(function(oCheckbox) {
+                    if (oCheckbox.selected && !oCheckbox.hasFile) {
+                        oCheckbox.hasFile = true;
+                        oCheckbox.fileName = oFile.name;
+                        oCheckbox.selected = false;
+                        bFileAssigned = true;
+                    }
+                });
+
+                if (bFileAssigned) {
+                    oViewModel.setProperty("/checkboxes", aCheckboxData);
+                    this.updateCheckboxes();
+                    MessageBox.information("File uploaded successfully: " + oFile.name);
+                } else {
+                    MessageBox.warning("Please select an available checkbox before uploading a file.");
+                }
             }
         },
 
         onSubmitRequest: function () {
-            var oModel = this.getView().getModel();
-            var oData = oModel.getData();
+            var oViewModel = this.getView().getModel("viewModel");
+            var oData = oViewModel.getData();
             
             // Here you would typically send the data to a server
             // For demonstration, we're just showing the data in a message box
