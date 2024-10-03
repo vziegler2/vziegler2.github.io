@@ -6,22 +6,20 @@
     <script
         id="sap-ui-bootstrap"
         src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
-        data-sap-ui-libs="sap.m"
-        data-sap-ui-theme="sap_belize"
-        data-sap-ui-compatVersion="edge">
+        data-sap-ui-libs="sap.m, sap.ui.core, sap.ui.layout, sap.ui.unified"
+        data-sap-ui-theme="sap_fiori_3"
+        data-sap-ui-resourceroots='{
+            "myapp": "./"
+        }'
+        data-sap-ui-async="true"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-frameOptions="trusted">
     </script>
     <script>
         sap.ui.getCore().attachInit(function () {
-            sap.ui.require([
-                "sap/m/Text"
-            ], function (Text) {
-                new Text({
-                    text: "Material request"
-                }).placeAt("content");
-            });
+            sap.ui.require(["myapp/index"]);
         });
     </script>
 </head>
-<body class="sapUiBody" id="content">
-</body>
+<body class="sapUiBody" id="content"></body>
 </html>
