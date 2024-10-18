@@ -1,164 +1,37 @@
 <mvc:View
-    controllerName="myapp.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
-    xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core"
-    xmlns:u="sap.ui.unified">
-    <App>
-        <Page title="Material Request">
+   controllerName="com.mycompany.myapp.controller.Main"
+   xmlns:mvc="sap.ui.core.mvc"
+   xmlns="sap.m"
+   xmlns:l="sap.ui.layout"
+   xmlns:f="sap.ui.layout.form"
+   xmlns:core="sap.ui.core">
+   <App>
+      <pages>
+         <Page title="{i18n>pageTitle}" class="sapUiResponsiveContentPadding">
             <content>
-                <f:SimpleForm editable="true" layout="ResponsiveGridLayout">
-                    <f:content>
-                        <Label text="Sales markets" />
-                        <MultiComboBox
-                            items="{
-                                path: 'viewModel>/salesMarkets',
-                                sorter: { path: 'viewModel>text' }
-                            }"
-                            selectedKeys="{viewModel>/selectedSalesMarkets}">
-                            <core:Item key="{viewModel>key}" text="{viewModel>text}" />
-                        </MultiComboBox>
-                        
-                        <Label text="Has formula contact" />
-                        <RadioButtonGroup selectedIndex="{viewModel>/hasFormulaContact}" columns="2">
-                            <RadioButton text="Yes" />
-                            <RadioButton text="No" />
-                        </RadioButtonGroup>
-
-                        <Label text="Used for Transport only" visible="{= ${viewModel>/hasFormulaContact} === 1}" />
-                        <RadioButtonGroup selectedIndex="{viewModel>/usedForTransportOnly}" visible="{= ${viewModel>/hasFormulaContact} === 1}" columns="2">
-                            <RadioButton text="Yes" />
-                            <RadioButton text="No" />
-                        </RadioButtonGroup>
-
-                        <Label text="Country of origin" />
-                        <ComboBox
-                            items="{
-                                path: 'viewModel>/countries',
-                                sorter: { path: 'viewModel>text' }
-                            }"
-                            selectedKey="{viewModel>/countryOfOrigin}">
-                            <core:Item key="{viewModel>key}" text="{viewModel>text}" />
-                        </ComboBox>
-
-                        <Label text="Supplier" />
-                        <Input value="{viewModel>/supplier}" />
-
-                        <Label text="Manufacturer/Product link" />
-                        <Input value="{viewModel>/manufacturerLink}" />
-
-                        <Label text="Mail/phone supplier contact" />
-                        <Input value="{viewModel>/supplierContact}" />
-
-                        <Label text="Material Name" />
-                        <Input value="{viewModel>/materialName}" maxLength="30" />
-
-                        <Label text="Material Group" />
-                        <Select
-                            selectedKey="{viewModel>/materialGroup}"
-                            change="onMaterialGroupChange">
-                            <core:Item key="" text="" />
-                            <core:Item key="group1" text="Group 1" />
-                            <core:Item key="group2" text="Group 2" />
-                            <core:Item key="group3" text="Group 3" />
-                        </Select>
-
-                        <Label text="Material Type" />
-                        <Input value="{viewModel>/materialType}" />
-
-                        <Label text="Material Subtype" />
-                        <Input value="{viewModel>/materialSubtype}" />
-                        
-                        <Label text="Color" />
-                        <Select selectedKey="{viewModel>/color}">
-                            <core:Item key="" text="" />
-                            <core:Item key="red" text="Red" />
-                            <core:Item key="blue" text="Blue" />
-                            <core:Item key="green" text="Green" />
-                            <core:Item key="yellow" text="Yellow" />
-                            <core:Item key="black" text="Black" />
-                            <core:Item key="white" text="White" />
-                        </Select>
-
-                        <Label text="Opacity" />
-                        <Select selectedKey="{viewModel>/opacity}">
-                            <core:Item key="" text="" />
-                            <core:Item key="transparent" text="Transparent" />
-                            <core:Item key="translucent" text="Translucent" />
-                            <core:Item key="opaque" text="Opaque" />
-                        </Select>
-
-                        <Label text="Made from renewable resources" />
-                        <RadioButtonGroup selectedIndex="{viewModel>/madeFromRenewableResources}" columns="2">
-                            <RadioButton text="Yes" />
-                            <RadioButton text="No" />
-                        </RadioButtonGroup>
-
-                        <Label text="Technical expert Group" />
-                        <Select selectedKey="{viewModel>/technicalExpertGroup}">
-                            <core:Item key="" text="" />
-                            <core:Item key="group1" text="Expert Group 1" />
-                            <core:Item key="group2" text="Expert Group 2" />
-                            <core:Item key="group3" text="Expert Group 3" />
-                        </Select>
-
-                        <Label text="Material Predecessor" />
-                        <Input value="{viewModel>/materialPredecessor}" />
-
-                        <Label text="Recycling Technology" />
-                        <Select selectedKey="{viewModel>/recyclingTechnology}">
-                            <core:Item key="" text="" />
-                            <core:Item key="mechanical" text="Mechanical" />
-                            <core:Item key="chemical" text="Chemical" />
-                            <core:Item key="biological" text="Biological" />
-                        </Select>
-
-                        <Label text="Post-Consumer Recycled (PCR) [%]" />
-                        <StepInput
-                            value="{viewModel>/pcrContent}"
-                            min="0"
-                            max="100"
-                            step="1" />
-
-                        <Label text="Post-Industrial Recycled (PIR) [%]" />
-                        <StepInput
-                            value="{viewModel>/pirContent}"
-                            min="0"
-                            max="100"
-                            step="1" />
-
-                        <Label text="Latest Deadline" />
-                        <DatePicker
-                            value="{viewModel>/latestDeadline}"
-                            valueFormat="yyyy-MM-dd"
-                            displayFormat="long" />
-
-                        <Label text="Requester" />
-                        <Input value="{viewModel>/requester}" />                                                                        
-                    </f:content>
-                </f:SimpleForm>
-
-                <Button text="Show Checkboxes" press="onShowCheckboxes" />
-
-                <Panel id="checkboxContainer" visible="false">
-                    <VBox id="checkboxVBox">
-                        <!-- Checkboxes will be added dynamically -->
-                    </VBox>
-                </Panel>
-
-                <u:FileUploader
-                    id="fileUploader"
-                    uploadComplete="handleUploadComplete"
-                    change="handleFileChange"
-                    style="Emphasized"
-                    buttonText="Upload File" />
-                
-                <Label text="Email Address" />
-                <Input value="{viewModel>/emailAddress}" type="Email" />
-
-                <Button text="Submit Request" press="onSubmitRequest" type="Emphasized" />
+               <l:VerticalLayout width="100%" class="sapUiContentPadding">
+                  <l:content>
+                     <f:SimpleForm editable="false" layout="ResponsiveGridLayout" 
+                        labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" 
+                        adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" 
+                        columnsXL="1" columnsL="1" columnsM="1" 
+                        singleContainerFullSize="false">
+                        <f:content>
+                           <core:Title text="{i18n>donationTitle}" />
+                           <Label text="{i18n>donationDescription}" />
+                           <Text text="{i18n>donationText}" />
+                           <core:HTML content='&lt;form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"&gt;
+                              &lt;input type="hidden" name="cmd" value="_donations" /&gt;
+                              &lt;input type="hidden" name="business" value="alvar.aalto@web.de" /&gt;
+                              &lt;input type="hidden" name="currency_code" value="EUR" /&gt;
+                              &lt;input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Spenden mit dem PayPal-Button" /&gt;
+                           &lt;/form&gt;' />
+                        </f:content>
+                     </f:SimpleForm>
+                  </l:content>
+               </l:VerticalLayout>
             </content>
-        </Page>
-    </App>
+         </Page>
+      </pages>
+   </App>
 </mvc:View>

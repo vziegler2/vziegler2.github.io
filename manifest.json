@@ -1,55 +1,44 @@
 {
-    "sap.app": {
-      "id": "myapp",
-      "type": "application",
-      "title": "My First UI5 App",
-      "applicationVersion": {
-        "version": "1.0.0"
+  "_version": "1.12.0",
+  "sap.app": {
+    "id": "com.mycompany.myapp",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "applicationVersion": {
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "com.mycompany.myapp.view.Main",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.60.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
       }
     },
-    "sap.ui5": {
-      "rootView": {
-        "viewName": "myapp.view.Main",
-        "type": "XML",
-        "async": true,
-        "id": "app"
-      },
-      "dependencies": {
-        "minUI5Version": "1.60.0",
-        "libs": {
-          "sap.m": {},
-          "sap.ui.core": {},
-          "sap.ui.layout": {},
-          "sap.ui.unified": {}
-        }
-      },
-      "models": {
-        "": {
-          "type": "sap.ui.model.json.JSONModel"
-        }
-      },
-      "routing": {
-        "config": {
-          "routerClass": "sap.m.routing.Router",
-          "viewType": "XML",
-          "viewPath": "myapp.view",
-          "controlId": "app",
-          "controlAggregation": "pages",
-          "async": true
-        },
-        "routes": [
-          {
-            "pattern": "",
-            "name": "main",
-            "target": "main"
-          }
-        ],
-        "targets": {
-          "main": {
-            "viewName": "Main"
-          }
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.mycompany.myapp.i18n.i18n"
         }
       }
     }
   }
-  
+}
