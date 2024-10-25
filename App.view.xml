@@ -7,15 +7,15 @@
 	xmlns:core="sap.ui.core"
 	xmlns:tnt="sap.tnt">
 	<App id="app">
-		<Page title="UI5">
+		<Page title="What's this?">
 			<Button
 				icon="sap-icon://sap-ui5"
-				text="Go!"
+				text="Start"
 				press=".onPress"
 				type="Emphasized"
 				class="sapUiSmallMargin"/>
 		</Page>
-		<Page id="intro" title="Create Enterprise-Ready Web Apps with Ease">
+		<Page id="intro" title="Welcome">
 			<l:BlockLayout background="Light">
 				<l:BlockLayoutRow>
 					<l:BlockLayoutCell>
@@ -33,11 +33,11 @@
 
 				<l:BlockLayoutRow>
 					<l:BlockLayoutCell>
-						<Panel headerText="Are you ready?" expandable="true">
+						<Panel headerText="Discover more?" expandable="true">
 							<Switch change=".onChange" customTextOn="yes" customTextOff="no"/>
 							<l:HorizontalLayout id="ready" visible="false" class="sapUiSmallMargin">
-								<Text text="Ok, let's get you started!" class="sapUiTinyMarginEnd"/>
-								<Link text="Learn more" href="https://sdk.openui5.org/"/>
+								<Text text="Who created this?" class="sapUiTinyMarginEnd"/>
+								<Link text="LinkedIn" href="https://www.linkedin.com/in/vikram-z-b19304146/"/>
 							</l:HorizontalLayout>
 						</Panel>
 					</l:BlockLayoutCell>

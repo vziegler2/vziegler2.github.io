@@ -1,2 +1,0 @@
-sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/model/json/JSONModel"],function(e,t){"use strict";return e.extend("com.mycompany.myapp.controller.Main",{onInit:function(){this._adjustLayout();sap.ui.Device.resize.attachHandler(this._adjustLayout,this)},_adjustLayout:function(){var e=this.getView();var i=new t({isPhone:sap.ui.Device.system.phone,isTablet:sap.ui.Device.system.tablet,isDesktop:sap.ui.Device.system.desktop});e.setModel(i,"device")},onExit:function(){sap.ui.Device.resize.detachHandler(this._adjustLayout,this)}})});
-//# sourceMappingURL=Main.controller.js.map

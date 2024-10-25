@@ -7,7 +7,7 @@ sap.ui.define([
 
 	return Controller.extend("ui5.App", {
 		onPress() {
-			MessageToast.show("Hello UI5!");
+			MessageToast.show("Hello Visitor");
 			this.byId("app").to(this.byId("intro"));
 		},
 
