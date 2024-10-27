@@ -8,14 +8,18 @@
 	xmlns:tnt="sap.tnt">
 	<App id="app">
 		<Page title="What's this?">
-			<Button
-				icon="sap-icon://sap-ui5"
+			<Button id="next"
 				text="Start"
 				press=".onPress"
-				type="Emphasized"
+				width="20%"
 				class="sapUiSmallMargin"/>
 		</Page>
 		<Page id="intro" title="Welcome">
+			<Button id="back"
+				text="Back"
+				press=".onPress"
+				width="20%"
+				class="sapUiSmallMargin"/>
 			<l:BlockLayout background="Light">
 				<l:BlockLayoutRow>
 					<l:BlockLayoutCell>

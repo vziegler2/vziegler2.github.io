@@ -6,20 +6,27 @@ sap.ui.define([
 	"use strict";
 
 	return Controller.extend("ui5.App", {
-		onPress() {
-			MessageToast.show("Hello Visitor");
-			this.byId("app").to(this.byId("intro"));
+		onPress(oEvent) {
+			const sButtonId = oEvent.getSource().getId();
+			const oApp = this.byId("app");
+
+			if (sButtonId.endsWith("next")) {
+				oApp.to(this.byId("intro"), "show");
+				MessageToast.show("Hello Visitor");
+			} else if (sButtonId.endsWith("back")) {
+				oApp.back();
+			}
 		},
 
 		onInit() {
 			this.getView().setModel(new JSONModel({
 					features: [
-						"Enterprise-Ready Web Toolkit",
-						"Powerful Development Concepts",
-						"Feature-Rich UI Controls",
-						"Consistent User Experience",
-						"Free and Open Source",
-						"Responsive Across Browsers and Devices"
+						"Mr",
+						"Vikram",
+						"Ziegler",
+						"Neuwiedenthal",
+						"Hamburg",
+						"Germany"
 					]
 				})
 			);
